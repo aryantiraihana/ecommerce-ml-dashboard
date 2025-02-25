@@ -5,10 +5,12 @@ import seaborn as sns
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("final_data.csv")
-    
-    df["order_delivered_customer_date"] = pd.to_datetime(df["order_delivered_customer_date"])
-    df["order_estimated_delivery_date"] = pd.to_datetime(df["order_estimated_delivery_date"])
+    uploaded_file = st.file_uploader("Upload final_data.csv", type=["csv"])
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
+        
+        df["order_delivered_customer_date"] = pd.to_datetime(df["order_delivered_customer_date"])
+        df["order_estimated_delivery_date"] = pd.to_datetime(df["order_estimated_delivery_date"])
     
     return df
 
