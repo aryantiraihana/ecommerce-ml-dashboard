@@ -503,7 +503,7 @@
             "markers": "python_version >= '3.9'",
             "version": "==3.0.2"
         },
-        "matplotlib": {
+        "matplotlib.pyplot": {
             "hashes": [
                 "sha256:01d2b19f13aeec2e759414d3bfe19ddfb16b13a1250add08d46d5ff6f9be83c6",
                 "sha256:12eaf48463b472c3c0f8dbacdbf906e573013df81a0ab82f0616ea4b11281908",
