@@ -5,12 +5,10 @@ import seaborn as sns
 
 @st.cache_data
 def load_data():
-    uploaded_file = st.file_uploader("Upload final_data.csv", type=["csv"])
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        
-        df["order_delivered_customer_date"] = pd.to_datetime(df["order_delivered_customer_date"])
-        df["order_estimated_delivery_date"] = pd.to_datetime(df["order_estimated_delivery_date"])
+    df = pd.read_csv("dashboard/final_data.csv")
+    
+    df["order_delivered_customer_date"] = pd.to_datetime(df["order_delivered_customer_date"])
+    df["order_estimated_delivery_date"] = pd.to_datetime(df["order_estimated_delivery_date"])
     
     return df
 
@@ -86,3 +84,7 @@ ax.set_title(f"🚚 Pola Keterlambatan Pengiriman | {start_date} - {end_date}")
 plt.xticks(rotation=45, ha="right")
 
 st.pyplot(fig)
+
+st.subheader("Conclusion")
+st.text("Kategori dengan rating terbaik yaitu fashion_childrens_clothes menunjukkan bahwa konsumen merasa puas dengan produk-produk dalam kategori tersebut.")
+st.text("Kategori dengan rating terburuk yaitu furniture_mattress_and_upholstery dimungkinkan karena adanya masalah pada kualitas produk, layanan atau hal lain yang berkaitan dengan kepuasan pelanggan.")
