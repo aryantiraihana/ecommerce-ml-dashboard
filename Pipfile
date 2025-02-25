@@ -4,10 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pandas = "*"
-streamlit = "*"
-matplotlib.pyplot = "*"
-seaborn = "*"
+pandas = "2.2.3"
+streamlit = "1.42.0"
+matplotlib.pyplot = "3.10.0"
+seaborn = "0.13.2"
 
 [dev-packages]
 
