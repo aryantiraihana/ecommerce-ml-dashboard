@@ -5,14 +5,15 @@ import seaborn as sns
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("dashboard/final_data.csv", parse_dates=["order_delivered_customer_date", "order_estimated_delivery_date"])
+    df1 = pd.read_csv("dashboard/final_df_case1.csv")
+    df2 = pd.read_csv("dashboard/final_df_case2.csv", parse_dates=["order_delivered_customer_date", "order_estimated_delivery_date"])
 
-    return df
+    return df1, df2
 
-df = load_data()
+df_case1, df_case2 = load_data()
 
-min_date = df["order_delivered_customer_date"].min().date()
-max_date = df["order_delivered_customer_date"].max().date()
+min_date = df_case2["order_delivered_customer_date"].min().date()
+max_date = df_case2["order_delivered_customer_date"].max().date()
 
 with st.sidebar:
 
@@ -23,12 +24,12 @@ with st.sidebar:
         value=[min_date, max_date]
     )
 
-filtered_df = df[
-    (df["order_delivered_customer_date"].dt.date >= start_date) &
-    (df["order_delivered_customer_date"].dt.date <= end_date)
+filtered_df_case2 = df_case2[
+    (df_case2["order_delivered_customer_date"].dt.date >= start_date) &
+    (df_case2["order_delivered_customer_date"].dt.date <= end_date)
 ]
 
-if filtered_df.empty:
+if filtered_df_case2.empty:
     st.warning("Tidak ada data dalam rentang tanggal yang dipilih.")
     st.stop()
 
@@ -36,7 +37,7 @@ st.header('E-Commerce Dashboard :sparkles:')
 
 st.subheader("📊 Analisis Jumlah Pesanan")
 
-order_count_per_category = filtered_df.groupby("product_category_name_english")["order_id"].count().reset_index()
+order_count_per_category = df_case1.groupby("product_category_name_english")["order_id"].count().reset_index()
 order_count_per_category.columns = ["product_category_name_english", "total_orders"]
 order_count_per_category = order_count_per_category.sort_values(by="total_orders", ascending=False)
 
@@ -57,7 +58,7 @@ st.pyplot(fig)
 
 st.subheader("⭐ Analisis Rating Produk")
 
-rating_per_category = filtered_df.groupby("product_category_name_english").agg(
+rating_per_category = df_case1.groupby("product_category_name_english").agg(
     avg_rating=("review_score", "mean")
 ).reset_index()
 rating_per_category = rating_per_category.sort_values(by="avg_rating", ascending=False)
@@ -85,21 +86,13 @@ st.pyplot(fig)
 
 st.subheader("📦 Analisis Keterlambatan Pengiriman")
 
-filtered_df["delivery_delay_days"] = (
-    filtered_df["order_delivered_customer_date"] - filtered_df["order_estimated_delivery_date"]
-).dt.days
-
-bins = [-999, 0, 3, 7, 999]
-labels = ["Tepat Waktu", "Terlambat 1-3 hari", "Terlambat 4-7 hari", "Terlambat >7 hari"]
-filtered_df["delivery_category"] = pd.cut(filtered_df["delivery_delay_days"], bins=bins, labels=labels)
-
-delay_counts = filtered_df.groupby(["product_category_name_english", "delivery_category"]).agg(
+delay_counts = filtered_df_case2.groupby(["product_category_name_english", "delivery_category"]).agg(
     total_orders=("order_id", "count")
 ).reset_index()
 
 delay_counts = delay_counts.pivot(index="product_category_name_english", columns="delivery_category", values="total_orders").fillna(0)
 
-num_categories = st.slider("Pilih jumlah kategori:", min_value=5, max_value=10, value=5)
+num_categories = st.slider("Pilih jumlah kategori:", min_value=5, max_value=10, value=10)
 delay_counts = delay_counts.head(num_categories)
 
 fig, ax = plt.subplots(figsize=(12, 6))
