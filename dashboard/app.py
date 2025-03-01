@@ -113,5 +113,5 @@ st.subheader("Kesimpulan")
 st.markdown("""
 - **Kategori dengan rating terbaik** adalah `fashion_childrens_clothes`, menunjukkan bahwa konsumen merasa puas dengan produk-produk dalam kategori ini.
 - **Kategori dengan rating terburuk** adalah `furniture_mattress_and_upholstery`, kemungkinan karena masalah kualitas produk, layanan, atau faktor lain yang memengaruhi kepuasan pelanggan.
-- Sebagian besar pengiriman dalam semua kategori produk berhasil dilakukan tepat waktu. Ini ditunjukkan oleh bagian biru tua yang dominan di setiap batang grafik. **Kategori dengan frekuensi keterlambatan tertinggi** adalah `bed_bath_table`, menunjukkan adanya masalah khusus dalam proses pengiriman untuk produk-produk dalam kategori ini.
+- Sebagian besar pengiriman dalam semua kategori produk berhasil dilakukan tepat waktu. Ini ditunjukkan oleh bagian (warna) hijau yang dominan di setiap batang grafik. **Kategori dengan frekuensi keterlambatan tertinggi** adalah `bed_bath_table`, menunjukkan adanya masalah khusus dalam proses pengiriman untuk produk-produk dalam kategori ini.
 """)
